@@ -1,30 +1,28 @@
 import { useState } from 'react'
+import CourseList from './components/CourseList'
+import CourseForm from './components/CourseForm'
 
 
 function App() {
   const [courses, setCourses] = useState(
     [
       {id: 1, name: 'Maths'},
-      {id: 1, name: 'English'},
-      {id: 1, name: 'History'},
-      {id: 1, name: 'Science'},
+      {id: 2, name: 'English'},
+      {id: 3, name: 'History'},
+      {id: 4, name: 'Science'},
     ]);
+  const handleDeleteCourse = (id) => {
+    setCourses(courses.filter(course => course.id !== id));
+  }
   const [newCourse, setNewCourse] = useState('');
-
 
   return (
     <div>
-      <h1>Course Finder</h1>
-       <ul>
-        {courses.map((course, index) => (
-          <li key={course.id}>{course.name}</li>
-        ))}
-       </ul>
-       <input type="text" value={newCourse} onChange={(e) => setNewCourse(e.target.value)}/>
-       <button onClick={() => setCourses([...courses, {id: courses.length + 1, name: newCourse}])}>Add Course</button>
+      <CourseForm courses={courses} setCourses={setCourses} newCourse={newCourse} setNewCourse={setNewCourse}/>
+      <CourseList courses={courses} onDelete={handleDeleteCourse}/>
     </div>
-      
   )
+
 }
 
 export default App
